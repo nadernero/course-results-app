@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { StudentResult } from './types';
-// في أعلى الملف
-import type { StudentResult, Evaluation } from './types'; // أضف Evaluation
-// --- SVG Icons (New & Polished) ---
+import type { StudentResult, Evaluation } from './types';
+
+// --- SVG Icons ---
 const SendIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform -rotate-45" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>;
 const BotIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>;
 const UserIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>;
 const SparklesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 9a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zm7-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7a1 1 0 10-2 0v1h-1z" clipRule="evenodd" /></svg>;
 
+// --- Interfaces ---
 interface AIChatViewProps {
     students: StudentResult[];
-    evaluations: Evaluation[]; // إضافة هذا السطر الجديد
+    evaluations: Evaluation[];
 }
 
 interface Message {
@@ -19,7 +19,6 @@ interface Message {
 }
 
 // --- Text Formatter Component ---
-// This component parses the raw text from AI and renders it beautifully
 const FormattedText: React.FC<{ text: string }> = ({ text }) => {
     if (!text) return null;
     const lines = text.split('\n');
@@ -29,7 +28,7 @@ const FormattedText: React.FC<{ text: string }> = ({ text }) => {
             {lines.map((line, index) => {
                 const trimmedLine = line.trim();
                 
-                // 1. Handle Bullet Points (starts with - or *)
+                // 1. Handle Bullet Points
                 if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('* ')) {
                     const content = trimmedLine.substring(2);
                     return (
@@ -40,7 +39,7 @@ const FormattedText: React.FC<{ text: string }> = ({ text }) => {
                     );
                 }
                 
-                // 2. Handle Headings (ends with :) or Numbered Lists (1. )
+                // 2. Handle Headings
                 if (trimmedLine.endsWith(':') || /^\d+\./.test(trimmedLine)) {
                      return (
                         <p key={index} className="font-bold text-indigo-700 dark:text-indigo-300 mt-3 mb-1" dangerouslySetInnerHTML={{ __html: parseBold(trimmedLine) }} />
@@ -57,23 +56,22 @@ const FormattedText: React.FC<{ text: string }> = ({ text }) => {
     );
 };
 
-// Helper to replace **text** with <strong>text</strong> safely
+// Helper to replace **text** with bold html
 const parseBold = (text: string) => {
-    // Basic sanitization
     const safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    // Replace **bold** markers with HTML strong tags
     return safeText.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-indigo-900 dark:text-indigo-100">$1</strong>');
 };
 
-export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
+// --- Main Component ---
+export const AIChatView: React.FC<AIChatViewProps> = ({ students, evaluations }) => {
     const [messages, setMessages] = useState<Message[]>([
-        { sender: 'ai', text: 'أهلاً بك يا خادم الرب! ✝️\nأنا مساعدك الذكي لتحليل بيانات الخدمة.\n\nيمكنك سؤالي عن:\n- **إحصائيات الحضور والغياب** 📊\n- **أداء الخدام في الكورسات** ⭐\n- **مقارنات بين الخدمات** ⚖️\n\nكيف يمكنني مساعدتك اليوم؟' }
+        { sender: 'ai', text: 'أهلاً بك يا خادم الرب! ✝️\nأنا مساعدك الروحي والإداري لتحليل بيانات الخدمة.\n\nيمكنك سؤالي عن:\n- **تحليل شامل لحالة خادم** (أكاديمياً وروحياً) 👤\n- **اقتراح حلول للمتغيبين** 💡\n- **إحصائيات الخدمة العامة** 📊\n\nكيف يمكنني مساعدتك اليوم؟' }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
 
-    // Auto-scroll to bottom
+    // Auto-scroll
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isLoading]);
@@ -90,10 +88,10 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
         setIsLoading(true);
         
         try {
-            // تجميع البيانات في كائن واحد ليفهمه الذكاء الاصطناعي
+            // تجميع البيانات
             const contextData = {
                 academicResults: students,
-                serviceEvaluations: evaluations // يتم تمرير التقييمات هنا (حتى لو كانت فارغة حالياً ستعمل)
+                serviceEvaluations: evaluations
             };
 
             const systemInstruction = `
@@ -131,8 +129,9 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
             **تنبيه هام:**
             * إذا لم تتوفر بيانات التقييمات (Evaluations)، اعتمد على النتائج فقط ولكن نبه المستخدم أن "التحليل السلوكي غير متاح".
             * تعامل مع الأسماء العربية بذكاء (تجاهل الفروق البسيطة في الكتابة).
+            * إذا سألك عن "أفضل الخدام" أو إحصائيات عامة، قدم تقريراً مجمّعاً وليس لكل فرد.
 
-            البيانات الكاملة: ${JSON.stringify(contextData).slice(0, 25000)} (تم تحديد الحد الأقصى للبيانات)`; 
+            البيانات الكاملة: ${JSON.stringify(contextData).slice(0, 25000)}`; 
             
             const response = await fetch('/.netlify/functions/gemini', {
               method: 'POST',
@@ -158,10 +157,10 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
     };
     
     const suggestedPrompts = [
-        "من هم أعلى 5 خدام في الدرجات؟ 🏆",
-        "كم عدد الخدام في كل خدمة؟ 📊",
-        "أعطني قائمة بالخدام الغائبين ⚠️",
-        "ما هو متوسط الحضور العام؟ 📉",
+        "من هم المتميزون روحياً وأكاديمياً؟ 🏆",
+        "تحليل شامل للخادم: [اسم الخادم]",
+        "من يحتاج إلى افتقاد عاجل؟ ⚠️",
+        "نصيحة عامة للخدمة حالياً 💡",
     ];
 
     return (
@@ -172,8 +171,8 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
                     <SparklesIcon />
                 </div>
                 <div>
-                    <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg">المساعد الذكي</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">متاح لتحليل البيانات فورياً</p>
+                    <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg">المساعد الذكي (المطور)</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">تحليل روحي وإداري متقدم</p>
                 </div>
             </div>
 
@@ -240,7 +239,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
                         type="text" 
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="اكتب سؤالك هنا..." 
+                        placeholder="اكتب سؤالك أو اسم خادم للتحليل..." 
                         className="w-full pl-4 pr-12 py-3.5 bg-gray-100 dark:bg-slate-900 border-transparent focus:bg-white dark:focus:bg-black focus:border-indigo-500 rounded-xl focus:ring-0 text-slate-800 dark:text-slate-100 placeholder-gray-400 transition-all shadow-inner text-sm"
                         disabled={isLoading}
                     />
