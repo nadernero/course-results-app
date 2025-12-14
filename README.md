@@ -41,4 +41,5 @@ This project is configured for easy deployment on Netlify.
     *   Click "Edit variables" and add a new variable:
         *   **Key:** `API_KEY`
         *   **Value:** Paste your Gemini API key here.
+         
 6.  **Deploy site:** Click "Deploy site". Netlify will start building and deploying your application.

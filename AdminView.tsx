@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { db } from './firebaseConfig';
 import { read, utils, writeFile } from 'xlsx';
@@ -102,7 +103,7 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
     const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
     const serviceFilterRef = useRef<HTMLDivElement>(null);
-    const [modalData, setModalData] = useState<{ title: string; students: StudentResult[] } | null>(null);
+    const [modalData, setModalData] = useState<{ title: string; students: StudentResult[]; contextTitle?: string } | null>(null);
     
     // Mobile sidebar state
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -333,7 +334,14 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
         const courseDistributionAllRecords: Record<string, StudentResult[]> = {};
         courseRegistrations.forEach(student => { const course = student.courseName.trim(); if (course) { if (!courseDistributionAllRecords[course]) courseDistributionAllRecords[course] = []; courseDistributionAllRecords[course].push(student); } });
         const sortedCourseDistribution = Object.entries(courseDistributionAllRecords).map(([course, studentList]) => ({ course, count: studentList.length })).sort((a, b) => b.count - a.count).slice(0, 5);
-        return { total: uniquePeopleCount, totalUniqueInDB, present, absent, avgScore, avgAttendance, gradeDistribution: gradeDistributionCounts, courseDistribution: sortedCourseDistribution, topPerformers, attendanceDistribution: attendanceDistributionCounts, totalRegistrations: courseRegistrations.length, absentStudents, presentStudents, gradeDistributionLists, attendanceDistributionLists, courseDistributionAllRecords, isFiltered: isCourseFilterActive || isServiceFilterActive, selectedRegistrations: totalRegistrationsInFilter, };
+        
+        // Helper string for the current filter context
+        const courseTitle = selectedCourses.includes('الكل') || selectedCourses.length === 0 ? 'جميع الكورسات' : selectedCourses.join(', ');
+        const serviceTitle = selectedServices.includes('الكل') || selectedServices.length === 0 ? 'جميع الخدمات' : selectedServices.join(', ');
+        const contextTitle = `الخدمة: ${serviceTitle} / الكورس: ${courseTitle}`;
+        const fileNameBase = `${serviceTitle.replace(/[^a-z0-9\u0600-\u06FF \-_]/gi, '_')}_${courseTitle.replace(/[^a-z0-9\u0600-\u06FF \-_]/gi, '_')}`;
+
+        return { total: uniquePeopleCount, totalUniqueInDB, present, absent, avgScore, avgAttendance, gradeDistribution: gradeDistributionCounts, courseDistribution: sortedCourseDistribution, topPerformers, attendanceDistribution: attendanceDistributionCounts, totalRegistrations: courseRegistrations.length, absentStudents, presentStudents, gradeDistributionLists, attendanceDistributionLists, courseDistributionAllRecords, isFiltered: isCourseFilterActive || isServiceFilterActive, selectedRegistrations: totalRegistrationsInFilter, contextTitle, fileNameBase };
     }, [courseRegistrations, selectedCourses, selectedServices]);
 
     const handleGradeBarClick = (gradeLabel: string) => {
@@ -341,6 +349,7 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
             setModalData({
                 title: `الخدام الحاصلون على تقدير "${gradeLabel}"`,
                 students: stats.gradeDistributionLists[gradeLabel],
+                contextTitle: stats.contextTitle
             });
         }
     };
@@ -350,18 +359,52 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
             setModalData({
                 title: `الخدام في فئة الحضور "${attendanceLabel}"`,
                 students: stats.attendanceDistributionLists[attendanceLabel],
+                contextTitle: stats.contextTitle
+            });
+        }
+    };
+    
+    // Show stats modal for card click
+    const handleStatCardClick = (title: string, students: StudentResult[]) => {
+        if (stats) {
+            setModalData({
+                title,
+                students,
+                contextTitle: stats.contextTitle
             });
         }
     };
 
     const handleExportImage = () => {
-        if (!dashboardRef.current || !window.html2canvas) return;
+        if (!dashboardRef.current || !window.html2canvas || !stats) return;
         setIsExportingImage(true);
-        window.html2canvas(dashboardRef.current, { scale: 2, useCORS: true, backgroundColor: isDarkMode ? '#1e293b' : '#f8fafc' })
+        window.html2canvas(dashboardRef.current, { 
+            scale: 2, 
+            useCORS: true, 
+            allowTaint: true,
+            backgroundColor: isDarkMode ? '#1e293b' : '#f8fafc',
+            onclone: (clonedDoc) => {
+                const element = clonedDoc.querySelector('[data-dashboard-container]') as HTMLElement;
+                if (element) {
+                    element.style.direction = 'rtl';
+                    element.style.fontFamily = "'Cairo', 'Arial', sans-serif";
+                    element.style.letterSpacing = 'normal'; // Force normal letter spacing
+                    element.style.fontVariantLigatures = 'normal'; // Force ligatures
+
+                    // Target all text elements to enforce connected script
+                    const textElements = element.querySelectorAll('h1, h2, h3, h4, p, span, div, strong');
+                    textElements.forEach((el: any) => {
+                        el.style.fontFamily = "'Cairo', 'Arial', sans-serif";
+                        el.style.letterSpacing = '0px';
+                        el.style.fontVariantLigatures = 'normal';
+                    });
+                }
+            }
+        })
           .then(canvas => {
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/png');
-            link.download = 'dashboard.png';
+            link.download = `${stats.fileNameBase}.png`;
             link.click();
           })
           .catch(err => console.error("Error exporting image:", err))
@@ -410,14 +453,25 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                 if (!stats) return <p>لا توجد بيانات كافية لعرض الإحصائيات.</p>;
                 const gradeColors = { 'ممتاز (90+)': 'bg-green-500', 'جيد جداً (80-89)': 'bg-sky-500', 'جيد (70-79)': 'bg-yellow-500', 'مقبول (60-69)': 'bg-orange-500', 'راسب (<60)': 'bg-red-500', };
                 const attendanceColors = { 'ممتاز (90+%)': 'bg-green-500', 'جيد (75-89%)': 'bg-sky-500', 'مقبول (50-74%)': 'bg-orange-500', 'ضعيف (<50%)': 'bg-red-500', };
+                
+                // Construct title parts for display
+                const courseTitle = selectedCourses.includes('الكل') || selectedCourses.length === 0 ? 'جميع الكورسات' : selectedCourses.join(', ');
+                const serviceTitle = selectedServices.includes('الكل') || selectedServices.length === 0 ? 'جميع الخدمات' : selectedServices.join(', ');
+
                 return (
-                    <div ref={dashboardRef} className="space-y-8 bg-slate-50 dark:bg-slate-900 p-4 sm:p-6 rounded-lg">
+                    <div ref={dashboardRef} data-dashboard-container className="space-y-8 bg-slate-50 dark:bg-slate-900 p-4 sm:p-6 rounded-lg" dir="rtl">
+                        {/* Header for Image Capture */}
+                        <div className="mb-6 text-center border-b border-gray-200 dark:border-slate-700 pb-4">
+                            <h2 className="text-xl font-bold text-blue-700 dark:text-blue-400 mb-1">{courseTitle}</h2>
+                            <h3 className="text-lg font-semibold text-slate-600 dark:text-slate-300">{serviceTitle}</h3>
+                        </div>
+
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                             <div>
                                 <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">لوحة المعلومات</h2>
                                 <p className="text-slate-500 dark:text-slate-400 mt-1">نظرة شاملة على أداء الخدام في الكورسات المحددة.</p>
                             </div>
-                             <div className="flex items-center gap-2">
+                             <div className="flex items-center gap-2" data-html2canvas-ignore="true">
                                 <button onClick={handleExportImage} disabled={isExportingImage} className="flex items-center px-4 py-2 bg-sky-100 text-sky-800 font-semibold rounded-lg hover:bg-sky-200 disabled:opacity-50 dark:bg-sky-900/50 dark:text-sky-300 dark:hover:bg-sky-900/70">
                                     <CameraIcon /> {isExportingImage ? 'جاري الحفظ...' : 'حفظ كصورة'}
                                 </button>
@@ -426,8 +480,8 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <StatCard icon={<UsersIcon />} title="إجمالي الخدام" value={stats.total} unit=" خادم" color="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-300" description={`من إجمالي ${stats.totalUniqueInDB} في قاعدة البيانات`} />
-                            <StatCard icon={<CheckCircleIcon />} title="الحضور" value={stats.present} unit=" خادم" color="bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-300" description={`${stats.selectedRegistrations > 0 ? Math.round((stats.present / stats.selectedRegistrations) * 100) : 0}% من المحدد`} onClick={() => setModalData({ title: 'الخدام الحاضرون', students: stats.presentStudents })}/>
-                            <StatCard icon={<XCircleIcon />} title="الغياب" value={stats.absent} unit=" خادم" color="bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-300" description={`${stats.selectedRegistrations > 0 ? Math.round((stats.absent / stats.selectedRegistrations) * 100) : 0}% من المحدد`} onClick={() => setModalData({ title: 'الخدام الغائبون', students: stats.absentStudents })}/>
+                            <StatCard icon={<CheckCircleIcon />} title="الحضور" value={stats.present} unit=" خادم" color="bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-300" description={`${stats.selectedRegistrations > 0 ? Math.round((stats.present / stats.selectedRegistrations) * 100) : 0}% من المحدد`} onClick={() => handleStatCardClick('الخدام الحاضرون', stats.presentStudents)}/>
+                            <StatCard icon={<XCircleIcon />} title="الغياب" value={stats.absent} unit=" خادم" color="bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-300" description={`${stats.selectedRegistrations > 0 ? Math.round((stats.absent / stats.selectedRegistrations) * 100) : 0}% من المحدد`} onClick={() => handleStatCardClick('الخدام الغائبون', stats.absentStudents)}/>
                             <StatCard icon={<TrophyIcon />} title="متوسط الدرجات" value={stats.avgScore} unit="/100" color="bg-yellow-100 text-yellow-600 dark:bg-yellow-900/50 dark:text-yellow-300" description="للخدام الحاضرين فقط"/>
                         </div>
 
@@ -540,7 +594,7 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                     {renderContent()}
                 </main>
             </div>
-             {modalData && <DetailsModal title={modalData.title} students={modalData.students} onClose={() => setModalData(null)} />}
+             {modalData && <DetailsModal title={modalData.title} students={modalData.students} contextTitle={modalData.contextTitle} onClose={() => setModalData(null)} />}
              {servantToView && <ServantProfileModal servant={servantToView} onClose={() => setServantToView(null)} />}
         </div>
     );
