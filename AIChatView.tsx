@@ -224,7 +224,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
     ];
 
     return (
-        <div className="flex flex-col h-[600px] max-h-[75vh] bg-slate-50 dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-700 overflow-hidden font-sans">
+        <div className="flex flex-col h-[85vh] bg-slate-50 dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-700 overflow-hidden font-sans">
             {/* Header */}
             <div className="bg-white dark:bg-slate-800 p-4 border-b border-gray-200 dark:border-slate-700 flex items-center gap-3 shadow-sm z-10">
                 <div className="bg-indigo-100 dark:bg-indigo-900/50 p-2 rounded-full">
@@ -246,7 +246,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
                         
                         <div 
                             id={`msg-content-${index}`} 
-                            className={`px-5 py-3.5 rounded-2xl max-w-[85%] md:max-w-xl shadow-sm ${
+                            className={`px-5 py-3.5 rounded-2xl max-w-[95%] md:max-w-3xl shadow-sm ${
                             msg.sender === 'user' 
                             ? 'bg-indigo-600 text-white rounded-tr-none' 
                             : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-tl-none border border-gray-200 dark:border-slate-700'
