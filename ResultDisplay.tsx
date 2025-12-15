@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import type { FullStudentProfile, CourseResult } from './types';
 import LoadingSpinner from './LoadingSpinner';
+import { useToast } from './ToastProvider';
 
 // --- SVG Icons ---
 const SparklesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0m-7.072 0L3 21m18-9a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
@@ -12,6 +13,8 @@ const BriefcaseIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h
 const CalendarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>;
 const StarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.52 4.674c.3.921-.755 1.688-1.54 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976-2.888c-.784.57-1.838-.197-1.539-1.118l1.52-4.674a1 1 0 00-.363-1.118L2.98 9.11c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.52-4.674z" /></svg>;
 const GraduationCapIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 14v6m-4-3v3m8-3v3" /></svg>;
+const WhatsAppIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>;
+const ClipboardIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>;
 
 interface CertificateData {
     name: string;
@@ -175,6 +178,7 @@ const SmartGuideSection: React.FC<Omit<ResultDisplayProps, 'onShowCertificate' |
     onGenerateAdvice, spiritualAdvice, isAdviceLoading,
     onGenerateSpecialMessage, specialMessage, isSpecialMessageLoading,
 }) => {
+  const { addToast } = useToast();
   const isLoading = isMessageLoading || isAdviceLoading || isSpecialMessageLoading;
   const messageToShow = specialMessage || spiritualAdvice || motivationalMessage;
   
@@ -203,6 +207,29 @@ const SmartGuideSection: React.FC<Omit<ResultDisplayProps, 'onShowCertificate' |
     // Show button if attendance is low (e.g. 0), indicating absence in the latest course
     return attendance < 50;
   }, [profile]);
+
+  const handleShareWhatsApp = () => {
+      if (!messageToShow) return;
+      let mobileNumber = profile.servant.mobileNumber;
+      // Sanitize number: keep only digits
+      mobileNumber = mobileNumber.replace(/[^0-9]/g, '');
+      
+      // Basic logic to format for Egypt if it starts with 01... (e.g. 012...) -> 2012...
+      // If it doesn't match standard Egyptian mobile, we just use it as is or empty.
+      if (mobileNumber.startsWith('0')) {
+          mobileNumber = '2' + mobileNumber;
+      }
+      
+      const url = `https://wa.me/${mobileNumber}?text=${encodeURIComponent(messageToShow)}`;
+      window.open(url, '_blank');
+  };
+
+  const handleCopy = () => {
+      if (!messageToShow) return;
+      navigator.clipboard.writeText(messageToShow).then(() => {
+          addToast("تم نسخ الرسالة!", "success");
+      });
+  };
 
 
   return (
@@ -235,11 +262,23 @@ const SmartGuideSection: React.FC<Omit<ResultDisplayProps, 'onShowCertificate' |
                           <p className="text-slate-400 mt-3 text-sm">المرشد الذكي يفكر...</p>
                       </div>
                   ) : messageToShow ? (
-                      <blockquote className="relative w-full animate-fade-in-up">
-                          <p className="text-lg md:text-xl text-white dark:text-slate-100 leading-loose whitespace-pre-wrap" style={{fontFamily: "'Amiri', serif"}}>
-                              {messageToShow}
-                          </p>
-                      </blockquote>
+                      <div className="w-full animate-fade-in-up">
+                          <blockquote className="relative w-full mb-4">
+                              <p className="text-lg md:text-xl text-white dark:text-slate-100 leading-loose whitespace-pre-wrap" style={{fontFamily: "'Amiri', serif"}}>
+                                  {messageToShow}
+                              </p>
+                          </blockquote>
+                          <div className="flex justify-center gap-3">
+                              <button onClick={handleShareWhatsApp} className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors shadow-md">
+                                  <WhatsAppIcon />
+                                  <span>إرسال عبر واتس آب</span>
+                              </button>
+                              <button onClick={handleCopy} className="flex items-center gap-2 px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors shadow-md">
+                                  <ClipboardIcon />
+                                  <span>نسخ</span>
+                              </button>
+                          </div>
+                      </div>
                   ) : (
                       <p className="text-slate-300 dark:text-slate-400">اختر إحدى الخيارات أعلاه لاكتشاف رسالة ملهمة أو نصيحة روحية.</p>
                   )}
