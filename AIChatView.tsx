@@ -224,7 +224,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({ students }) => {
     ];
 
     return (
-        <div className="flex flex-col h-[85vh] bg-slate-50 dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-700 overflow-hidden font-sans">
+        <div className="flex flex-col h-[92vh] bg-slate-50 dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-700 overflow-hidden font-sans">
             {/* Header */}
             <div className="bg-white dark:bg-slate-800 p-4 border-b border-gray-200 dark:border-slate-700 flex items-center gap-3 shadow-sm z-10">
                 <div className="bg-indigo-100 dark:bg-indigo-900/50 p-2 rounded-full">
