@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { db } from './firebaseConfig';
@@ -221,7 +222,7 @@ const ServantProfileModal: React.FC<ServantProfileModalProps> = ({ servant, onCl
     const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
-    const [activeTab, setActiveTab] = useState('evaluations');
+    const [activeTab, setActiveTab] = useState('results');
     const [resultsCurrentPage, setResultsCurrentPage] = useState(1);
 
     useEffect(() => {
@@ -360,11 +361,11 @@ const ServantProfileModal: React.FC<ServantProfileModalProps> = ({ servant, onCl
         
                                 <div className="border-b border-gray-200 dark:border-slate-700 px-6">
                                     <nav className="-mb-px flex justify-center gap-x-6 sm:gap-x-8" aria-label="Tabs">
-                                         <button onClick={() => setActiveTab('evaluations')} className={`flex items-center gap-2 whitespace-nowrap py-4 px-1 border-b-4 font-semibold text-base transition-colors ${activeTab === 'evaluations' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-slate-600'}`}>
-                                            <ClipboardCheckIcon /> سجل التقييمات
-                                        </button>
-                                        <button onClick={() => setActiveTab('results')} className={`flex items-center gap-2 whitespace-nowrap py-4 px-1 border-b-4 font-semibold text-base transition-colors ${activeTab === 'results' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-slate-600'}`}>
+                                         <button onClick={() => setActiveTab('results')} className={`flex items-center gap-2 whitespace-nowrap py-4 px-1 border-b-4 font-semibold text-base transition-colors ${activeTab === 'results' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-slate-600'}`}>
                                             <GraduationCapIcon /> سجل الكورسات
+                                        </button>
+                                        <button onClick={() => setActiveTab('evaluations')} className={`flex items-center gap-2 whitespace-nowrap py-4 px-1 border-b-4 font-semibold text-base transition-colors ${activeTab === 'evaluations' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-slate-600'}`}>
+                                            <ClipboardCheckIcon /> سجل التقييمات
                                         </button>
                                     </nav>
                                 </div>

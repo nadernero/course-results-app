@@ -14,6 +14,7 @@ import GeneralSettingsView from './GeneralSettingsView';
 import ConfirmationModal from './ConfirmationModal';
 import ServantProfileModal from './ServantProfileModal';
 import UsageStatsView from './UsageStatsView';
+import AdvancedFilterView from './AdvancedFilterView';
 
 
 // --- SVG Icons ---
@@ -25,18 +26,16 @@ const DocumentTextIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className
 const GraduationCapIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 14v6m-4-3v3m8-3v3" /></svg>;
 const ClipboardCheckIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>;
 const SparklesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6.343 17.657l-2.828 2.828m14.142-14.142l2.828 2.828m-12.728 0l2.828-2.828m0 0l2.828 2.828M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg>;
-const CogIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066 2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
 const LogoutIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>;
 const CheckCircleIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
 const XCircleIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
 const StarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.52 4.674c.3.921-.755 1.688-1.54 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976-2.888c-.784.57-1.838-.197-1.539-1.118l1.52-4.674a1 1 0 00-.363-1.118L2.98 9.11c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.52-4.674z" /></svg>;
 const CalendarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>;
 const TrophyIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3m6-9h-2m-4 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
-const CourseIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>;
-const PaletteIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>;
-const TrendingUpIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>;
+const FilterIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>;
 const CameraIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
-const ExcelIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M21.16,3.16a.5.5,0,0,0-.57-.16l-18,4A.5.5,0,0,0,2.5,8v8a.5.5,0,0,0,.16.37.5.5,0,0,0,.38.13l18,4a.5.5,0,0,0,.57-.6V3.5A.5.5,0,0,0,21.16,3.16ZM11,12.1,7.26,14.28,3.5,12.5,7.1,10.59Zm8.5,3.31-3.6-1.74,3.6-1.92ZM18,7.91,14.25,10,11,8.1,14.65,6Z"/></svg>;
+const TrendingUpIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>;
+const PaletteIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>;
 
 
 const normalizeMobile = (num: string | number): string => String(num || '').trim().startsWith('0') ? String(num).substring(1) : String(num);
@@ -58,7 +57,7 @@ const HorizontalBarChart: React.FC<{ title: string; data: Record<string, number>
         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">{icon} {title}</h3>
         <div className="space-y-4">
             {Object.entries(data).map(([label, count]) => {
-                if (count === 0) return null;
+                if (count === 0 && label !== 'غائب (لم يحضر)') return null;
                 const percentage = total > 0 ? (Number(count) / total) * 100 : 0;
                 return (
                     <div key={label} className={`group ${onBarClick ? 'cursor-pointer' : ''}`} onClick={() => onBarClick?.(label)}>
@@ -67,7 +66,7 @@ const HorizontalBarChart: React.FC<{ title: string; data: Record<string, number>
                             <span className="font-semibold text-gray-600 dark:text-gray-400 group-hover:text-[rgb(var(--color-primary-dark-text-rgb))] transition-colors">{count} {unit}</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2.5">
-                            <div className={`${colors[label]} h-2.5 rounded-full transition-all duration-500 ease-out`} style={{ width: `${percentage}%` }}></div>
+                            <div className={`${colors[label] || 'bg-slate-400'} h-2.5 rounded-full transition-all duration-500 ease-out`} style={{ width: `${percentage}%` }}></div>
                         </div>
                     </div>
                 );
@@ -318,36 +317,103 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
             }
         }
         
-        const totalUniqueInDB = new Set(courseRegistrations.map(s => s.code)).size; const uniquePeopleCount = new Set(dataForStats.map(s => s.code)).size;
-        const absentStudents = dataForStats.filter(s => s.score === 'غائب'); const presentStudents = dataForStats.filter((s): s is StudentResult & { score: number } => typeof s.score === 'number');
-        const totalRegistrationsInFilter = dataForStats.length; const absent = absentStudents.length; const present = presentStudents.length;
-        const totalScore = presentStudents.reduce((sum, s) => sum + s.score, 0); const avgScore = present > 0 ? Math.round(totalScore / present) : 0;
-        const totalAttendance = dataForStats.reduce((sum, s) => { const attendanceValue = typeof s.attendance === 'number' ? s.attendance : 0; const normalized = attendanceValue <= 1 ? attendanceValue * 100 : attendanceValue; return sum + normalized; }, 0);
-        const avgAttendance = totalRegistrationsInFilter > 0 ? Math.round(totalAttendance / totalRegistrationsInFilter) : 0;
-        const gradeDistributionLists: Record<string, (StudentResult & { score: number })[]> = { 'ممتاز (90+)': presentStudents.filter(s => s.score >= 90), 'جيد جداً (80-89)': presentStudents.filter(s => s.score >= 80 && s.score < 90), 'جيد (70-79)': presentStudents.filter(s => s.score >= 70 && s.score < 80), 'مقبول (60-69)': presentStudents.filter(s => s.score >= 60 && s.score < 70), 'راسب (<60)': presentStudents.filter(s => s.score < 60), };
+        const totalUniqueInDB = new Set(courseRegistrations.map(s => s.code)).size; 
+        
+        // --- Deduplication logic for Dashboard stats ---
+        // For unique people in charts: if multiple courses are selected, we group by code
+        const uniqueServantsInSelection = new Map<string, StudentResult>();
+        dataForStats.forEach(reg => {
+            const existing = uniqueServantsInSelection.get(reg.code);
+            if (!existing) {
+                uniqueServantsInSelection.set(reg.code, reg);
+            } else {
+                // If person has multiple results, keep the one with better score for grading charts
+                const currentScore = reg.score === 'غائب' ? -1 : Number(reg.score);
+                const existingScore = existing.score === 'غائب' ? -1 : Number(existing.score);
+                if (currentScore > existingScore) {
+                    uniqueServantsInSelection.set(reg.code, reg);
+                }
+            }
+        });
+        
+        const uniquePeopleList = Array.from(uniqueServantsInSelection.values());
+        const uniquePeopleCount = uniquePeopleList.length;
+
+        const absentStudents = uniquePeopleList.filter(s => s.score === 'غائب'); 
+        const presentStudents = uniquePeopleList.filter((s): s is StudentResult & { score: number } => typeof s.score === 'number');
+        
+        const absent = absentStudents.length; 
+        const present = presentStudents.length;
+        const totalScore = presentStudents.reduce((sum, s) => sum + s.score, 0); 
+        const avgScore = present > 0 ? Math.round(totalScore / present) : 0;
+        
+        const totalAttendance = uniquePeopleList.reduce((sum, s) => { 
+            const attendanceValue = typeof s.attendance === 'number' ? s.attendance : 0; 
+            const normalized = attendanceValue <= 1 ? attendanceValue * 100 : attendanceValue; 
+            return sum + normalized; 
+        }, 0);
+        const avgAttendance = uniquePeopleCount > 0 ? Math.round(totalAttendance / uniquePeopleCount) : 0;
+        
+        // Unique Grade Distribution
+        const gradeDistributionLists: Record<string, StudentResult[]> = { 
+            'فوق الممتاز (100)': presentStudents.filter(s => s.score === 100),
+            'ممتاز (90-99)': presentStudents.filter(s => s.score >= 90 && s.score < 100), 
+            'جيد جداً (80-89)': presentStudents.filter(s => s.score >= 80 && s.score < 90), 
+            'جيد (70-79)': presentStudents.filter(s => s.score >= 70 && s.score < 80), 
+            'مقبول (60-69)': presentStudents.filter(s => s.score >= 60 && s.score < 70), 
+            'راسب (<60)': presentStudents.filter(s => s.score < 60), 
+        };
         const gradeDistributionCounts = Object.fromEntries(Object.entries(gradeDistributionLists).map(([key, value]) => [key, value.length]));
-        const attendanceDistributionLists: Record<string, StudentResult[]> = { 'ممتاز (90+%)': dataForStats.filter(s => (s.attendance <= 1 ? s.attendance * 100 : s.attendance) >= 90), 'جيد (75-89%)': dataForStats.filter(s => { const normalized = s.attendance <= 1 ? s.attendance * 100 : s.attendance; return normalized >= 75 && normalized < 90; }), 'مقبول (50-74%)': dataForStats.filter(s => { const normalized = s.attendance <= 1 ? s.attendance * 100 : s.attendance; return normalized >= 50 && normalized < 75; }), 'ضعيف (<50%)': dataForStats.filter(s => (s.attendance <= 1 ? s.attendance * 100 : s.attendance) < 50), };
+        
+        // Unique Attendance Distribution
+        const attendanceDistributionLists: Record<string, StudentResult[]> = { 
+            'ممتاز (90+%)': uniquePeopleList.filter(s => s.score !== 'غائب' && (s.attendance <= 1 ? s.attendance * 100 : s.attendance) >= 90), 
+            'جيد (75-89%)': uniquePeopleList.filter(s => { const normalized = s.attendance <= 1 ? s.attendance * 100 : s.attendance; return s.score !== 'غائب' && normalized >= 75 && normalized < 90; }), 
+            'مقبول (50-74%)': uniquePeopleList.filter(s => { const normalized = s.attendance <= 1 ? s.attendance * 100 : s.attendance; return s.score !== 'غائب' && normalized >= 50 && normalized < 75; }), 
+            'ضعيف (<50%)': uniquePeopleList.filter(s => s.score !== 'غائب' && (s.attendance <= 1 ? s.attendance * 100 : s.attendance) < 50),
+            'غائب (لم يحضر)': absentStudents
+        };
         const attendanceDistributionCounts = Object.fromEntries(Object.entries(attendanceDistributionLists).map(([key, value]) => [key, value.length]));
-        const topPerformersMap = new Map<string, StudentResult & { score: number }>();
-        presentStudents.forEach(s => { if (!topPerformersMap.has(s.code) || s.score > topPerformersMap.get(s.code)!.score) { topPerformersMap.set(s.code, s); } });
-        const topPerformers = Array.from(topPerformersMap.values()).sort((a, b) => b.score - a.score).slice(0, 5);
+        
+        const topPerformers = [...presentStudents].sort((a, b) => b.score - a.score).slice(0, 5);
+        
         const courseDistributionAllRecords: Record<string, StudentResult[]> = {};
         courseRegistrations.forEach(student => { const course = student.courseName.trim(); if (course) { if (!courseDistributionAllRecords[course]) courseDistributionAllRecords[course] = []; courseDistributionAllRecords[course].push(student); } });
         const sortedCourseDistribution = Object.entries(courseDistributionAllRecords).map(([course, studentList]) => ({ course, count: studentList.length })).sort((a, b) => b.count - a.count).slice(0, 5);
         
-        // Helper string for the current filter context
         const courseTitle = selectedCourses.includes('الكل') || selectedCourses.length === 0 ? 'جميع الكورسات' : selectedCourses.join(', ');
         const serviceTitle = selectedServices.includes('الكل') || selectedServices.length === 0 ? 'جميع الخدمات' : selectedServices.join(', ');
         const contextTitle = `الخدمة: ${serviceTitle} / الكورس: ${courseTitle}`;
-        const fileNameBase = `${serviceTitle.replace(/[^a-z0-9\u0600-\u06FF \-_]/gi, '_')}_${courseTitle.replace(/[^a-z0-9\u0600-\u06FF \-_]/gi, '_')}`;
+        const fileNameBase = `Deduplicated_${serviceTitle}_${courseTitle}`;
 
-        return { total: uniquePeopleCount, totalUniqueInDB, present, absent, avgScore, avgAttendance, gradeDistribution: gradeDistributionCounts, courseDistribution: sortedCourseDistribution, topPerformers, attendanceDistribution: attendanceDistributionCounts, totalRegistrations: courseRegistrations.length, absentStudents, presentStudents, gradeDistributionLists, attendanceDistributionLists, courseDistributionAllRecords, isFiltered: isCourseFilterActive || isServiceFilterActive, selectedRegistrations: totalRegistrationsInFilter, contextTitle, fileNameBase };
+        return { 
+            total: uniquePeopleCount, 
+            totalUniqueInDB, 
+            present, 
+            absent, 
+            avgScore, 
+            avgAttendance, 
+            gradeDistribution: gradeDistributionCounts, 
+            courseDistribution: sortedCourseDistribution, 
+            topPerformers, 
+            attendanceDistribution: attendanceDistributionCounts, 
+            totalRegistrations: courseRegistrations.length, 
+            absentStudents, 
+            presentStudents, 
+            gradeDistributionLists, 
+            attendanceDistributionLists, 
+            courseDistributionAllRecords, 
+            isFiltered: isCourseFilterActive || isServiceFilterActive, 
+            selectedRegistrations: uniquePeopleCount, 
+            contextTitle, 
+            fileNameBase 
+        };
     }, [courseRegistrations, selectedCourses, selectedServices]);
 
     const handleGradeBarClick = (gradeLabel: string) => {
         if (stats?.gradeDistributionLists[gradeLabel]) {
             setModalData({
-                title: `الخدام الحاصلون على تقدير "${gradeLabel}"`,
+                title: `الخدام الحاصلون على تقدير "${gradeLabel}" (أفراد فريدون)`,
                 students: stats.gradeDistributionLists[gradeLabel],
                 contextTitle: stats.contextTitle
             });
@@ -357,7 +423,7 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
     const handleAttendanceBarClick = (attendanceLabel: string) => {
         if (stats?.attendanceDistributionLists[attendanceLabel]) {
             setModalData({
-                title: `الخدام في فئة الحضور "${attendanceLabel}"`,
+                title: `الخدام في فئة الحضور "${attendanceLabel}" (أفراد فريدون)`,
                 students: stats.attendanceDistributionLists[attendanceLabel],
                 contextTitle: stats.contextTitle
             });
@@ -368,7 +434,7 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
     const handleStatCardClick = (title: string, students: StudentResult[]) => {
         if (stats) {
             setModalData({
-                title,
+                title: `${title} (أفراد فريدون)`,
                 students,
                 contextTitle: stats.contextTitle
             });
@@ -388,10 +454,8 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                 if (element) {
                     element.style.direction = 'rtl';
                     element.style.fontFamily = "'Cairo', 'Arial', sans-serif";
-                    element.style.letterSpacing = 'normal'; // Force normal letter spacing
-                    element.style.fontVariantLigatures = 'normal'; // Force ligatures
-
-                    // Target all text elements to enforce connected script
+                    element.style.letterSpacing = 'normal';
+                    element.style.fontVariantLigatures = 'normal';
                     const textElements = element.querySelectorAll('h1, h2, h3, h4, p, span, div, strong');
                     textElements.forEach((el: any) => {
                         el.style.fontFamily = "'Cairo', 'Arial', sans-serif";
@@ -414,8 +478,6 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
     const handleExportAllFiltered = () => {
         if (!stats) return;
         setIsExportingAll(true);
-        // @google/genai-ts: Fix: 'isFiltered' was not defined. It should be accessed from the 'stats' object.
-        // @google/genai-ts: Fix: Corrected a type error in array concatenation by using the spread operator (...) to merge 'presentStudents' and 'absentStudents', ensuring type compatibility.
         const dataToExport = (stats.isFiltered ? [...stats.presentStudents, ...stats.absentStudents] : courseRegistrations).map(s => ({
             'الكود': s.code,
             'الاسم': s.name,
@@ -429,12 +491,13 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
         const worksheet = utils.json_to_sheet(dataToExport);
         const workbook = utils.book_new();
         utils.book_append_sheet(workbook, worksheet, "Filtered Registrations");
-        writeFile(workbook, `filtered_data_${new Date().toISOString().split('T')[0]}.xlsx`);
+        writeFile(workbook, `unique_filtered_data_${new Date().toISOString().split('T')[0]}.xlsx`);
         setIsExportingAll(false);
     };
 
     const tabs = [
         { id: 'info', name: 'المعلومات والإحصائيات', icon: <ChartBarIcon /> },
+        { id: 'advanced_filter', name: 'البحث المتقدم والفلترة', icon: <FilterIcon /> },
         { id: 'ai_chat', name: 'المساعد الذكي', icon: <SparklesIcon /> },
         { id: 'servants_data', name: 'إدارة الخدام', icon: <UsersIcon /> },
         { id: 'courses_data', name: 'إدارة نتائج الكورسات', icon: <GraduationCapIcon /> },
@@ -451,16 +514,27 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
         switch (activeTab) {
             case 'info':
                 if (!stats) return <p>لا توجد بيانات كافية لعرض الإحصائيات.</p>;
-                const gradeColors = { 'ممتاز (90+)': 'bg-green-500', 'جيد جداً (80-89)': 'bg-sky-500', 'جيد (70-79)': 'bg-yellow-500', 'مقبول (60-69)': 'bg-orange-500', 'راسب (<60)': 'bg-red-500', };
-                const attendanceColors = { 'ممتاز (90+%)': 'bg-green-500', 'جيد (75-89%)': 'bg-sky-500', 'مقبول (50-74%)': 'bg-orange-500', 'ضعيف (<50%)': 'bg-red-500', };
+                const gradeColors = { 
+                    'فوق الممتاز (100)': 'bg-indigo-600',
+                    'ممتاز (90-99)': 'bg-green-500', 
+                    'جيد جداً (80-89)': 'bg-sky-500', 
+                    'جيد (70-79)': 'bg-yellow-500', 
+                    'مقبول (60-69)': 'bg-orange-500', 
+                    'راسب (<60)': 'bg-red-500', 
+                };
+                const attendanceColors = { 
+                    'ممتاز (90+%)': 'bg-green-500', 
+                    'جيد (75-89%)': 'bg-sky-500', 
+                    'مقبول (50-74%)': 'bg-orange-500', 
+                    'ضعيف (<50%)': 'bg-red-400',
+                    'غائب (لم يحضر)': 'bg-red-600'
+                };
                 
-                // Construct title parts for display
                 const courseTitle = selectedCourses.includes('الكل') || selectedCourses.length === 0 ? 'جميع الكورسات' : selectedCourses.join(', ');
                 const serviceTitle = selectedServices.includes('الكل') || selectedServices.length === 0 ? 'جميع الخدمات' : selectedServices.join(', ');
 
                 return (
                     <div ref={dashboardRef} data-dashboard-container className="space-y-8 bg-slate-50 dark:bg-slate-900 p-4 sm:p-6 rounded-lg" dir="rtl">
-                        {/* Header for Image Capture */}
                         <div className="mb-6 text-center border-b border-gray-200 dark:border-slate-700 pb-4">
                             <h2 className="text-xl font-bold text-blue-700 dark:text-blue-400 mb-1">{courseTitle}</h2>
                             <h3 className="text-lg font-semibold text-slate-600 dark:text-slate-300">{serviceTitle}</h3>
@@ -468,8 +542,8 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
 
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                             <div>
-                                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">لوحة المعلومات</h2>
-                                <p className="text-slate-500 dark:text-slate-400 mt-1">نظرة شاملة على أداء الخدام في الكورسات المحددة.</p>
+                                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">لوحة المعلومات (أسماء فريدة)</h2>
+                                <p className="text-slate-500 dark:text-slate-400 mt-1">يتم حساب كل خادم مرة واحدة فقط حتى لو اختيرت عدة كورسات.</p>
                             </div>
                              <div className="flex items-center gap-2" data-html2canvas-ignore="true">
                                 <button onClick={handleExportImage} disabled={isExportingImage} className="flex items-center px-4 py-2 bg-sky-100 text-sky-800 font-semibold rounded-lg hover:bg-sky-200 disabled:opacity-50 dark:bg-sky-900/50 dark:text-sky-300 dark:hover:bg-sky-900/70">
@@ -479,18 +553,19 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <StatCard icon={<UsersIcon />} title="إجمالي الخدام" value={stats.total} unit=" خادم" color="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-300" description={`من إجمالي ${stats.totalUniqueInDB} في قاعدة البيانات`} />
-                            <StatCard icon={<CheckCircleIcon />} title="الحضور" value={stats.present} unit=" خادم" color="bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-300" description={`${stats.selectedRegistrations > 0 ? Math.round((stats.present / stats.selectedRegistrations) * 100) : 0}% من المحدد`} onClick={() => handleStatCardClick('الخدام الحاضرون', stats.presentStudents)}/>
-                            <StatCard icon={<XCircleIcon />} title="الغياب" value={stats.absent} unit=" خادم" color="bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-300" description={`${stats.selectedRegistrations > 0 ? Math.round((stats.absent / stats.selectedRegistrations) * 100) : 0}% من المحدد`} onClick={() => handleStatCardClick('الخدام الغائبون', stats.absentStudents)}/>
-                            <StatCard icon={<TrophyIcon />} title="متوسط الدرجات" value={stats.avgScore} unit="/100" color="bg-yellow-100 text-yellow-600 dark:bg-yellow-900/50 dark:text-yellow-300" description="للخدام الحاضرين فقط"/>
+                            <StatCard icon={<UsersIcon />} title="إجمالي الخدام المختارين" value={stats.total} unit=" خادم" color="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-300" description={`من إجمالي ${stats.totalUniqueInDB} في قاعدة البيانات`} />
+                            <StatCard icon={<CheckCircleIcon />} title="حضروا مرة على الأقل" value={stats.present} unit=" خادم" color="bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-300" description={`${stats.total > 0 ? Math.round((stats.present / stats.total) * 100) : 0}% من المختارين`} onClick={() => handleStatCardClick('الخدام الحاضرون', stats.presentStudents)}/>
+                            <StatCard icon={<XCircleIcon />} title="غابوا في الكل" value={stats.absent} unit=" خادم" color="bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-300" description={`${stats.total > 0 ? Math.round((stats.absent / stats.total) * 100) : 0}% من المختارين`} onClick={() => handleStatCardClick('الخدام الغائبون', stats.absentStudents)}/>
+                            <StatCard icon={<TrophyIcon />} title="متوسط الدرجات الفريد" value={stats.avgScore} unit="/100" color="bg-yellow-100 text-yellow-600 dark:bg-yellow-900/50 dark:text-yellow-300" description="حساب متوسط أعلى درجة لكل خادم مختار"/>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <HorizontalBarChart title="توزيع التقديرات" data={stats.gradeDistribution} colors={gradeColors} total={stats.present} icon={<StarIcon />} onBarClick={handleGradeBarClick} />
-                            <HorizontalBarChart title="توزيع الحضور" data={stats.attendanceDistribution} colors={attendanceColors} total={stats.selectedRegistrations} icon={<CalendarIcon />} onBarClick={handleAttendanceBarClick} />
+                            <HorizontalBarChart title="توزيع التقديرات (أفراد)" data={stats.gradeDistribution} colors={gradeColors} total={stats.present} icon={<StarIcon />} onBarClick={handleGradeBarClick} />
+                            <HorizontalBarChart title="توزيع الحضور (أفراد)" data={stats.attendanceDistribution} colors={attendanceColors} total={stats.total} icon={<CalendarIcon />} onBarClick={handleAttendanceBarClick} />
                         </div>
                     </div>
                 );
+            case 'advanced_filter': return <AdvancedFilterView courseRegistrations={courseRegistrations} courses={courses} services={services} />;
             case 'ai_chat': return <AIChatView students={courseRegistrations} />;
             case 'servants_data': return <DataManagementView />;
             case 'courses_data': return <CourseResultsDataView />;
@@ -527,7 +602,7 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                             </button>
                         ))}
                         <button onClick={onLogout} className="flex items-center gap-3 px-4 py-3 mt-4 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700/50">
-                            <LogoutIcon />
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                             <span>تسجيل الخروج</span>
                         </button>
                     </nav>
@@ -536,7 +611,6 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                 {/* --- Main Content --- */}
                 <main className="flex-grow p-4 sm:p-6 lg:p-8">
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
-                        {/* Global Search */}
                         <div ref={globalSearchRef} className="relative w-full sm:max-w-md">
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"><svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg></div>
                             <input type="text" placeholder="بحث سريع عن خادم..." value={globalSearchTerm} onChange={e => setGlobalSearchTerm(e.target.value)} onFocus={() => setIsGlobalSearchFocused(true)} className="w-full px-4 py-2 pr-10 text-gray-700 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-gray-200"/>
@@ -553,7 +627,6 @@ const AdminView: React.FC<AdminViewProps> = ({ onLogout, certificateTexts, setCe
                                 </div>
                             )}
                         </div>
-                        {/* Filters for Info Tab */}
                         {activeTab === 'info' && (
                              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                                 <div ref={courseFilterRef} className="relative w-full sm:w-48">
